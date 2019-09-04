@@ -23,9 +23,6 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question queryQuestion(@RequestParam("id") Integer id) {
         Question question = questionRepository.findById(id).get();
-        if (null == question) {
-            return null;
-        }
         return question;
     }
 }

@@ -23,26 +23,35 @@ public class QuestionController {
 
     @GetMapping("/getQuestionList")
     public HttpResult getQuestionList() {
-        List<Question> questionList = questionService.queryQuestionList();
-        return HttpResult.getSuccessInstance(questionList);
+        try {
+            List<Question> questionList = questionService.queryQuestionList();
+            return HttpResult.getSuccessInstance(questionList);
+        } catch (Exception e) {
+            return HttpResult.getFailedInstance("接口异常");
+        }
     }
 
     @GetMapping("/getQuestion")
     public HttpResult getQuestion(Integer id) {
-        Question question = questionService.queryQuestion(id);
-        if (null == question) {
-            return HttpResult.getFailedInstance("抱歉，没有这个问题！");
+        try {
+            Question question = questionService.queryQuestion(id);
+            return HttpResult.getSuccessInstance(question);
+        } catch (Exception e) {
+            return HttpResult.getFailedInstance("接口异常");
         }
-        return HttpResult.getSuccessInstance(question);
     }
 
     @PostMapping("/addQuestion")
     public HttpResult addQuestion(@RequestParam("name") String name,
                                   @RequestParam("desc") String desc) {
-        Question question = new Question();
-        question.setName(name);
-        question.setDesc(desc);
-        questionRepository.save(question);
-        return HttpResult.getSuccessInstance();
+        try {
+            Question question = new Question();
+            question.setName(name);
+            question.setDesc(desc);
+            questionRepository.save(question);
+            return HttpResult.getSuccessInstance();
+        } catch (Exception e) {
+            return HttpResult.getFailedInstance("接口异常");
+        }
     }
 }
