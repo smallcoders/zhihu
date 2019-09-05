@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -43,11 +44,12 @@ public class QuestionController {
 
     @PostMapping("/addQuestion")
     public HttpResult addQuestion(@RequestParam("name") String name,
-                                  @RequestParam("desc") String desc) {
+                                  @RequestParam("desc") String description) {
         try {
             Question question = new Question();
             question.setName(name);
-            question.setDesc(desc);
+            question.setDescription(description);
+            question.setIsDelete(0);
             questionRepository.save(question);
             return HttpResult.getSuccessInstance();
         } catch (Exception e) {
